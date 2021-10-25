@@ -19,7 +19,7 @@ class SList {
 	public:
 		const int& length() { return _length; }
 	private:
-		T[] data;
+		T * data;
 		int _length;
 
 /*
