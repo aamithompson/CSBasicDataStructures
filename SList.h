@@ -113,8 +113,28 @@ class SList {
 			}
 		}
 
-		//void Insert(int index, T e);
-		//void InsertRange(int index, T[] e);
+		void Insert(int index, T e){
+			SNode<T> * node = new SNode<T>;
+			node->value = e;
+			if(index == 0) {
+				node->next = (_length > 0) ? head : NULL;
+				head = node;
+			} else {
+				SNode<T> * temp = head;
+				for(int i = 0; i < index - 1; i++) {
+					temp = temp->next;
+				}
+
+				node->next = temp->next;
+				temp->next = node;
+			}
+		}
+
+		void InsertRange(int index, T arr[], int n) {
+			for(int i = n - 1; i >= 0; i--) {
+				Insert(index, arr[i]);
+			}
+		}
 
 		void RemoveAt(int index) {
 			if(empty()) {

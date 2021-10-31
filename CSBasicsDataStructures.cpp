@@ -1,6 +1,5 @@
 #include <iostream>
-#include "Array.h"
-#include "SList.h"
+#include "DataStructures.h"
 
 int main() {
 	int arr[] = { 1, 2, 3 };
@@ -26,6 +25,17 @@ int main() {
 	}
 	std::cout << std::endl << c.length();
 	std::cout << std::endl << c.empty();
+
+	for (int i = 0; i < 10; i++) {
+		c.Insert(i, i);
+		std::cout << c.GetValue(i);
+	}
+
+	c.InsertRange(9, arr, 3);
+	std::cout << std::endl;
+	for (int i = 0; i < 13; i++) {
+		std::cout << c.GetValue(i);
+	}
 
 	return 0;
 }
