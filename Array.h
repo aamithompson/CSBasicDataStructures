@@ -10,7 +10,6 @@
 
 #include <algorithm>
 #include <iterator>
-#include <string>
 //------------------------------------------------------------------------------
 namespace ds {
 template <class T>

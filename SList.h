@@ -1,15 +1,15 @@
 //==============================================================================
-// Filename: LinkedList.h
+// Filename: SList.h
 // Author: Aaron Thompson
 // Date Created: 10/18/2021
-// Date Last Modified: 10/29/2021
+// Date Last Modified: 10/30/2021
 // Description:
 //==============================================================================
 #ifndef S_LIST_H
 #define S_LIST_H
 
-#include <iostream>
-#include <string>
+#include <algorithm>
+#include <iterator>
 #include "Array.h"
 //------------------------------------------------------------------------------
 namespace ds {
