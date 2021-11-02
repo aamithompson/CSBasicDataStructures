@@ -73,6 +73,6 @@ class Queue {
 			return data.ToArray();
 		}
 };
-}; //END namespace ds
+} //END namespace ds
 //------------------------------------------------------------------------------
 #endif
