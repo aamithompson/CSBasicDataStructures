@@ -3,7 +3,7 @@
 // Author: Aaron Thompson
 // Date Created: 10/18/2021
 // Date Last Modified: 10/30/2021
-// Description:
+// Description: https://en.wikipedia.org/wiki/Queue_(abstract_data_type)
 //==============================================================================
 #ifndef QUEUE_H
 #define QUEUE_H

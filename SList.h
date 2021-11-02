@@ -2,8 +2,8 @@
 // Filename: SList.h
 // Author: Aaron Thompson
 // Date Created: 10/18/2021
-// Date Last Modified: 10/30/2021
-// Description:
+// Date Last Modified: 11/2/2021
+// Description: https://en.wikipedia.org/wiki/Linked_list#Singly_linked_list
 //==============================================================================
 #ifndef S_LIST_H
 #define S_LIST_H
@@ -203,6 +203,15 @@ class SList {
 		T GetValue(int index) {
 			SNode<T> * node = head;
 			for(int i = 0; i < index; i++) {
+				node = node->next;
+			}
+
+			return node->value;
+		}
+
+		T& operator[](int index) {
+			SNode<T>* node = head;
+			for (int i = 0; i < index; i++) {
 				node = node->next;
 			}
 

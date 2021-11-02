@@ -3,7 +3,7 @@
 // Author: Aaron Thompson
 // Date Created: 10/30/2021
 // Date Last Modified: 11/1/2021
-// Description:
+// Description: https://en.wikipedia.org/wiki/Stack_(abstract_data_type)
 //==============================================================================
 #ifndef  STACK_H
 #define STACK_H

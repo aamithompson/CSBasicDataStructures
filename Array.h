@@ -2,8 +2,8 @@
 // Filename: Array.h
 // Author: Aaron Thompson
 // Date Created: 10/19/2021
-// Date Last Modified: 10/29/2021
-// Description:
+// Date Last Modified: 11/2/2021
+// Description: Array data type
 //==============================================================================
 #ifndef ARRAY_H
 #define ARRAY_H
@@ -18,6 +18,7 @@ class Array {
 //------------------------------------------------------------------------------
 	public:
 		const int& length() { return _length; }
+		const bool& empty() { return _length == 0; }
 	private:
 		T * data;
 		int _length;

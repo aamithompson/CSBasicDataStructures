@@ -17,7 +17,7 @@
 #include "Set.h"
 #include "HashSet.h"
 #include "HashMap.h"
-#include "Dictionary.h"
+#include "Map.h"
 #include "Graph.h"
 #include "Tree.h"
 #include "BinaryTree.h"
