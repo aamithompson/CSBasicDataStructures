@@ -61,10 +61,10 @@ class SList {
 			return *ptr;
 		}
 
-		SList<T&> FindAll(T arr[], int n) {
+		SList<T&> FindAll(Array<T> arr) {
 			SList<T&> list = SList<T&>();
 			SNode<T> * node;
-			for(int i = 0; i < n; i++) {
+			for (int i = 0; i < arr.length(); i++) {
 				node = head;
 				for(int j = 0; j < _length; j++) {
 					if (arr[i] == node->value) {
@@ -77,6 +77,11 @@ class SList {
 			}
 
 			return list;
+		}
+
+		SList<T&> FindAll(T arr[], int n) {
+			Array<T> temp = new Array<T>(arr, n);
+			return FindAll(temp);
 		}
 
 		int IndexOf(T e) {
@@ -107,6 +112,12 @@ class SList {
 			_length++;
 		}
 
+		void AddRange(Array<T> arr) {
+			for (int i = 0; i < arr.length(); i++) {
+				Add(arr[i]);
+			}
+		}
+
 		void AddRange(T arr[], int n) {
 			for(int i = 0; i < n; i++) {
 				Add(arr[i]);
@@ -127,6 +138,12 @@ class SList {
 
 				node->next = temp->next;
 				temp->next = node;
+			}
+		}
+
+		void InsertRange(int index, Array<T> arr) {
+			for (int i = arr.length() - 1; i >= 0; i--) {
+				Insert(index, arr[i]);
 			}
 		}
 

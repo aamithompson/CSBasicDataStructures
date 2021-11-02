@@ -134,19 +134,38 @@ class Vector {
 			return *ptr;
 		}
 
-		Array<T&> FindAll(T[], int n) {
+		Array<T&> FindAll(Array<T> arr) {
 			int numOfElements = 0;
-			for(int i = 0; i < n; i++) {
-				if(Contains(T[i])) {
+			for (int i = 0; i < arr.length(); i++) {
+				if (Contains(arr[i])) {
 					numOfElements++;
 				}
 			}
 
 			if (numOfElements > 0) {
-				Array<T&> arr = Array<T&>(n);
+				Array<T&> result = Array<T&>(numOfElements);
+				int index = 0;
+				for(int i = 0; i < arr.length(); i++) {
+					T& e = Find(arr[i]);
+					if(*e != NULL) {
+						result[index] = e;
+						index++;
+					}
+
+					if(index > numOfElements) {
+						break;
+					}
+				}
+
+				return result;
 			}
 
 			return Array<T&>();
+		}
+
+		Array<T&> FindAll(T arr[], int n) {
+			Array<T> temp = new Array<T>(arr, n);
+			return FindAll(temp);
 		}
 
 		int IndexOf(T e) {
