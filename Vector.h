@@ -27,27 +27,57 @@ class Vector {
 		T * data;
 		int _length;
 		int _capacity;
+
+//FUNCTION(s)
+//------------------------------------------------------------------------------
+	public:
+		void Reserve(int n) {
+			if (n < _capacity) {
+				return;
+			}
+
+			capacity = n;
+			T* temp = data;
+			data = new T[capacity];
+			for (int i = 0; i < _length; i++) {
+				data[i] = temp[i];
+			}
+
+			delete[] temp;
+		}
+
 //CONSTRUCTOR(s)/DESTRUCTOR(s)
 //------------------------------------------------------------------------------
 	public:
 		Vector<T>() {
-
+			data = new T[];
+			_length = 0;
+			_capacity = 0;
 		}
 
 		Vector<T>(std::initializer_list<T> list) {
-
+			Reserve(list.size());
+			for (int i = 0; i < list.size(); i++) {
+				data[i] = list.begin()[i];
+			}
 		}
 
 		Vector<T>(T arr[], int n) {
-
+			Reserve(n);
+			for(int i = 0; i < n; i++) {
+				data[i] = arr[i];
+			}
 		}
 
 		Vector<T>(Array<T> arr) {
-
+			Reserve(arr.length());
+			for(int i = 0; i < arr.length(); i++) {
+				data[i] = arr[i];
+			}
 		}
 
 		~Vector<T>() {
-
+			delete[] data;
 		}
 //FUNCTION(s)
 //------------------------------------------------------------------------------
@@ -69,21 +99,6 @@ class Vector {
 			}
 		}
 
-		void Reserve(int n) {
-			if(n < _capacity) {
-				return;
-			}
-
-			capacity = n;
-			T * temp = data;
-			data = new T[capacity];
-			for(int i = 0; i < _length; i++) {
-				data[i] = temp[i];
-			}
-
-			delete[] temp;
-		}
-
 		void Add(T e) {
 			//Expanding vector capacity by powers of 2
 			if(length == _capacity) {
@@ -101,6 +116,22 @@ class Vector {
 			for(int i = 0; i < n; i++) {
 				Add(arr[i]);
 			}
+		}
+
+		void Remove(int index) {
+			for(int i = index; i < _length - 1; i++) {
+				data[i] = data[i + 1];
+			}
+
+			length--;
+		}
+
+		void Clear() {
+			delete[] data;
+			data = new T[];
+			_length = 0;
+			_capacity = 0;
+
 		}
 
 		//Data Retrieval Function(s)
