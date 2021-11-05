@@ -85,15 +85,22 @@ class Map {
 //------------------------------------------------------------------------------
 	public:
 		Map<K, T>() {
-
+			data = Vector<Pair<K, T>>();
 		}
 
 		Map<K, T>(K * keys, T * values, int n) {
-
+			data = Vector<Pair<K, T>>();
+			for(int i = 0; i < n; i++) {
+				Add(keys[i], values[i]);
+			}
 		}
 
 		Map<K, T>(Array<K> keys, Array<T> values) {
-
+			data = Vector<Pair<K, T>>();
+			int n = std::min(keys.length(), values.length());
+			for (int i = 0; i < n; i++) {
+				Add(keys[i], values[i]);
+			}
 		}
 
 //FUNCTION(s)
@@ -101,32 +108,61 @@ class Map {
 	public:
 		//Search Function(s)
 		bool Contains(K key) {
-			return false;
+			return (Find(key) != -1);
 		}
 
 		bool Contains(T value) {
+			for (int i = 0; i < data.length(); i++) {
+				if(data[i].value == value) {
+					return true;
+				}
+			}
+
 			return false;
 		}
 
 		bool Contains(K key, T value) {
+			int index = Find(key);
+			if(index != -1) {
+				return (data[index].value == value);
+			}
 
+			return false;
 		}
 
 		//Utility Function(s)
 		K * Keys() {
-			return NULL;
+			K keys[] = new K[data.length()];
+			for(int i = 0; i < data.length(); i++) {
+				keys[i] = data[i].key;
+			}
+
+			return keys;
 		}
 
 		Array<K> Keys() {
-			return Array<K>();
+			K arr[] = Keys();
+			Array<K> keys = Array<K>(arr, data.length());
+			delete[] arr;
+
+			return keys;
 		}
 
 		T * Values() {
-			return NULL;
+			T values[] = new T[data.length()];
+			for (int i = 0; i < data.length(); i++) {
+				values[i] = data[i].value;
+			}
+
+			return values;
 		}
 
 		Array<T> Values() {
-			return Array<T>();
+			T arr[] = Values();
+			Array<T> values = Array<T>(arr, data.length());
+			delete[] arr;
+
+			return values;
 		}
 };
 } //END namespace ds
