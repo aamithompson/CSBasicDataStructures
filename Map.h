@@ -4,6 +4,8 @@
 // Date Created: 11/1/2021
 // Date Last Modified: 11/2/2021
 // Description: https://en.wikipedia.org/wiki/Associative_array
+// https://en.wikipedia.org/wiki/Hash_table 
+// https://www.cs.cornell.edu/courses/cs312/2008sp/lectures/lec21.html
 //==============================================================================
 #ifndef MAP_H
 #define MAP_H
@@ -24,12 +26,12 @@ class Map {
 	public:
 		const int& length() { return data.length(); }
 		const bool& empty() { return data.empty(); }
-	private:
+	protected:
 		Vector<Pair<K, T>> data;
 
 //FUNCTION(s)
 //------------------------------------------------------------------------------
-	private:
+	protected:
 		//Search Function(s)
 		int Find(K key) {
 			for(int i = 0; i < data.length(); i++) {
@@ -163,6 +165,23 @@ class Map {
 			delete[] arr;
 
 			return values;
+		}
+};
+
+template <class K, class T>
+class HashMap : public Map<K, T> {
+	private:
+		unsigned int (*pHash)(K);
+	protected:
+		int Find(K key) {
+			int index = pHash(key);
+			for(int i = 0; i < this->data.length(); i++) {
+				if(this->data[(index + i) % this->data.length()].key == key) {
+					return (index + i) % this->data.length();
+				}
+			}
+
+			return -1;
 		}
 };
 } //END namespace ds
