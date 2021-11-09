@@ -55,6 +55,12 @@ class Vector {
 			_capacity = 0;
 		}
 
+		Vector<T>(int n) {
+			data = new T[n];
+			_length = 0;
+			_capacity = n;
+		}
+
 		Vector<T>(std::initializer_list<T> list) {
 			Reserve(list.size());
 			for (int i = 0; i < list.size(); i++) {

@@ -15,8 +15,6 @@
 #include "Stack.h"
 #include "Queue.h"
 #include "Set.h"
-#include "HashSet.h"
-#include "HashMap.h"
 #include "Map.h"
 #include "Graph.h"
 #include "Tree.h"
