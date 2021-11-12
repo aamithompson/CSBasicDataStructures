@@ -219,11 +219,13 @@ class HashMap : public MapInterface<K, T> {
 		const bool& empty() { return _count > 0;  }
 	private:
 		Pair<K, T> * data;
+		bool * occupied;
 		int _count;
 		int _capacity;
 		float loadFactor;
 		unsigned int (*pHash)(K);
 	protected:
+		//Search Function(s)
 		int Find(K key) {
 			int index = pHash(key);
 			for(int i = 0; i < _capacity; i++) {
@@ -235,16 +237,91 @@ class HashMap : public MapInterface<K, T> {
 			return -1;
 		}
 
+	private:
+		//Data Manipulation Function(s)
+		void Reserve(int n) {
+			if (n < _capacity) {
+				return;
+			}
+
+			int tempC = _capacity;
+			Pair<K, T> * tempD = data;
+			bool * tempO = occupied;
+			_capacity = n;
+			data = new Pair<K, T>[_capacity];
+			occupied = new bool[_capacity];
+			for (int i = 0; i < tempC; i++) {
+				occupied[i] = false;
+				if(tempO[i]) {
+					int index = Find(tempD[i].key);
+					data[index] = tempD[i];
+					occupied[index] = true;
+				}
+			}
+
+			delete[] tempD;
+			delete[] tempO;
+		}
+
+	public:
+		void Add(K key, T value) {
+			if(_count > std::ceil(_capacity * loadFactor)) {
+				int n = (_capacity == 0) ? 0 : (int)std::floor(std::log2(_capacity)) + 1;
+				n = (int)std::pow(2, n);
+
+				Reserve(n);
+			}
+
+			int index = Find(key);
+			Pair<K, T> pair = { key, value };
+			data[index] = pair;
+			occupied[index] = true;
+
+			count++;
+		}
+
+		void Remove(K key) {
+
+		}
+
+		void Clear() {
+
+		}
+
+		//Data Retrieval Function(s)
+		T GetValue() {
+
+		}
+
+		T Pop() {
+
+		}
+
 		HashMap<K, T>() {
-			this->data = Vector<K, T>(HASHMAP_DEFAULT_CAPACITY);
+			data = new Pair<K, T>[HASHMAP_DEFAULT_CAPACITY];
+			occupied = new bool[HASHMAP_DEFAULT_CAPACITY];
+			for(int i = 0; i < HASHMAP_DEFAULT_CAPACITY; i++) {
+				occupied[i] = false;
+			}
 		}
 
 		HashMap<K, T>(int n) {
-			this->data = (n < HASHMAP_DEFAULT_CAPACITY) ? Vector<K, T>(HASHMAP_DEFAULT_CAPACITY) : Vector<K, T>(n);
+			n = std::max(HASHMAP_DEFAULT_CAPACITY, n);
+			data = new Pair<K, T>[n];
+			occupied = new bool[n];
+			for (int i = 0; i < n; i++) {
+				occupied[i] = false;
+			}
 		}
 
 		HashMap<K, T>(K * keys, T * values, int n) {
-			this->data = (n < HASHMAP_DEFAULT_CAPACITY) ? Vector<K, T>(HASHMAP_DEFAULT_CAPACITY) : Vector<K, T>(n);
+			int maxCap = std::max(HASHMAP_DEFAULT_CAPACITY, n);
+			data = new Pair<K, T>[n];
+			occupied = new bool[n];
+			for (int i = 0; i < maxCap; i++) {
+				occupied[n] = false;
+			}
+
 			for(int i = 0; i < n; i++) {
 				Add(keys[i], values[i]);
 			}
@@ -252,7 +329,13 @@ class HashMap : public MapInterface<K, T> {
 
 		HashMap<K, T>(Array<K> keys, Array<T> values) {
 			int n = std::min(keys.length(), values.length());
-			this->data = (n < HASHMAP_DEFAULT_CAPACITY) ? Vector<K, T>(HASHMAP_DEFAULT_CAPACITY) : Vector<K, T>(n);
+			int maxCap = std::max(HASHMAP_DEFAULT_CAPACITY, n);
+			data = new Pair<K, T>[n];
+			occupied = new bool[n];
+			for (int i = 0; i < maxCap; i++) {
+				occupied[n] = false;
+			}
+
 			for(int i = 0; i < n; i++) {
 				Add(keys[i], values[i]);
 			}

@@ -36,9 +36,9 @@ class Vector {
 				return;
 			}
 
-			capacity = n;
+			_capacity = n;
 			T* temp = data;
-			data = new T[capacity];
+			data = new T[_capacity];
 			for (int i = 0; i < _length; i++) {
 				data[i] = temp[i];
 			}
