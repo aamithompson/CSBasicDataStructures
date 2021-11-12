@@ -28,7 +28,8 @@ class MapInterface {
 		virtual const int& count() { return 0; }
 		virtual const int& capacity() { return 0; }
 		virtual const bool& empty() { return true; }
-	private:
+	protected:
+		virtual int GetIndex(K key) { return 0; }
 		virtual int Find(K key) { return 0; }
 	public:
 		virtual void Add(){};
@@ -59,6 +60,16 @@ class Map : MapInterface<K, T> {
 //------------------------------------------------------------------------------
 	protected:
 		//Search Function(s)
+		/*int GetIndex(K key) {
+			for (int i = 0; i < data.length(); i++) {
+				if (data[i].key == key) {
+					return i;
+				}
+			}
+
+			return -1;
+		}*/
+
 		int Find(K key) {
 			for(int i = 0; i < data.length(); i++) {
 				if(data[i].key == key) {
@@ -226,11 +237,28 @@ class HashMap : public MapInterface<K, T> {
 		unsigned int (*pHash)(K);
 	protected:
 		//Search Function(s)
+		int GetIndex(K key) {
+			int index = pHash(key);
+			for (int i = 0; i < _capacity; i++) {
+				if(occupied[i]) {
+					if (data[(index + i) % _capacity].key == key) {
+						return (index + i) % _capacity;
+					}
+				} else {
+					return i;
+				}
+			}
+
+			return -1;
+		}
+
 		int Find(K key) {
 			int index = pHash(key);
 			for(int i = 0; i < _capacity; i++) {
-				if(data[(index + i) % _capacity].key == key) {
-					return (index + i) % _capacity;
+				if(occupied[i]) {
+					if(data[(index + i) % _capacity].key == key) {
+						return (index + i) % _capacity;
+					}
 				}
 			}
 
@@ -248,12 +276,12 @@ class HashMap : public MapInterface<K, T> {
 			Pair<K, T> * tempD = data;
 			bool * tempO = occupied;
 			_capacity = n;
-			data = new Pair<K, T>[_capacity];
-			occupied = new bool[_capacity];
+			data = new Pair<K, T>[n];
+			occupied = new bool[n];
 			for (int i = 0; i < tempC; i++) {
 				occupied[i] = false;
 				if(tempO[i]) {
-					int index = Find(tempD[i].key);
+					int index = GetIndex(tempD[i].key);
 					data[index] = tempD[i];
 					occupied[index] = true;
 				}
@@ -272,7 +300,7 @@ class HashMap : public MapInterface<K, T> {
 				Reserve(n);
 			}
 
-			int index = Find(key);
+			int index = GetIndex(key);
 			Pair<K, T> pair = { key, value };
 			data[index] = pair;
 			occupied[index] = true;
@@ -281,20 +309,31 @@ class HashMap : public MapInterface<K, T> {
 		}
 
 		void Remove(K key) {
-
+			int index = GetIndex(key);
+			occupied[index] = false
 		}
 
 		void Clear() {
-
+			for(int i = 0; i < _capacity; i++) {
+				occuplied[i] = false;
+			}
 		}
 
 		//Data Retrieval Function(s)
-		T GetValue() {
+		T GetValue(K key) {
+			int index = Find(key);
+			if (index != -1) {
+				return data[index].value;
+			}
 
+			T* ptr = NULL;
+			return ptr;
 		}
 
-		T Pop() {
-
+		T Pop(K key) {
+			T value = GetValue(key);
+			Remove(key);
+			return value;
 		}
 
 		HashMap<K, T>() {
