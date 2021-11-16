@@ -252,4 +252,4 @@ class Vector {
 };
 } //END namespace ds
 //------------------------------------------------------------------------------
-#endif //END namespace VECTOR_H
+#endif //VECTOR_H

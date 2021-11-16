@@ -2,7 +2,7 @@
 // Filename: Map.h
 // Author: Aaron Thompson
 // Date Created: 11/1/2021
-// Date Last Modified: 11/5/2021
+// Date Last Modified: 11/16/2021
 // Description: https://en.wikipedia.org/wiki/Associative_array
 // https://en.wikipedia.org/wiki/Hash_table 
 // https://www.cs.cornell.edu/courses/cs312/2008sp/lectures/lec21.html
@@ -310,12 +310,12 @@ class HashMap : public MapInterface<K, T> {
 
 		void Remove(K key) {
 			int index = GetIndex(key);
-			occupied[index] = false
+			occupied[index] = false;
 		}
 
 		void Clear() {
 			for(int i = 0; i < _capacity; i++) {
-				occuplied[i] = false;
+				occupied[i] = false;
 			}
 		}
 
@@ -379,7 +379,76 @@ class HashMap : public MapInterface<K, T> {
 				Add(keys[i], values[i]);
 			}
 		}
+
+		K* Keys() {
+			K keys[] = new K[_count];
+			int index = 0;
+			for(int i = 0; i < _capacity; i++) {
+				if(occupied[i]) {
+					keys[index] = data[i].key;
+					index++;
+
+					if(index == _count) {
+						break;
+					}
+				}
+			}
+		}
+
+		Array<K> Keys() {
+			K arr[] = Keys();
+			Array<K> keys = Array<K>(arr, _count);
+			delete[] arr;
+
+			return keys;
+		}
+
+		T* Values() {
+			T values[] = new K[_count];
+			int index = 0;
+			for(int i = 0; i < _capacity; i++) {
+				if(occupied[i]) {
+					values[index] = data[i].value;
+					index++;
+
+					if(index == _count) {
+						break;
+					}
+				}
+			}
+		}
+
+		Array<K> Values() {
+			T arr[] = Values();
+			Array<T> values = Array<T>(arr, _count);
+			delete[] arr;
+
+			return values;
+		}
+
+		Pair<K, T>* ToArray() {
+			Pair<K, T> arr[] = new Pair<K, T>[_count];
+			K keys[] = Keys();
+			T values[] = Values();
+
+			for(int i = 0; i < _count; i++) {
+				Pair<K, T> pair = {keys[i], values[i]};
+				arr[i] = pair;
+			}
+
+			delete[] keys;
+			delete[] values;
+			return arr;
+		}
+
+		Array<Pair<K, T>> ToArray() {
+			Pair<K, T> temp[] = ToArray();
+			Array<Pair<K, T>> arr = Array<Pair<K, T>>(temp, _count);
+			delete[] temp;
+
+			return arr;
+		}
 };
 } //END namespace ds
 //------------------------------------------------------------------------------
-#endif //END namespace MAP_H
+#endif //MAP_H

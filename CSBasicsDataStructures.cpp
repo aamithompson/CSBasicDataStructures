@@ -1,5 +1,6 @@
 #include <iostream>
 #include "DataStructures.h"
+#include "HashFunctions.h"
 
 int main() {
 	int arr[] = { 1, 2, 3 };
@@ -36,6 +37,9 @@ int main() {
 	for (int i = 0; i < 13; i++) {
 		std::cout << c.GetValue(i);
 	}
+
+	int lol = hash::SHA_256("hello world");
+	std::cout << std::endl << lol;
 
 	return 0;
 }
