@@ -23,6 +23,8 @@ struct Edge {
 namespace ds {
 template <class K, class T>
 class Graph {
+//VARIABLE(s)
+//------------------------------------------------------------------------------
 	public:
 		const int& count() { return data.count(); }
 		const bool& empty() { return data.empty(); }
@@ -33,20 +35,43 @@ class Graph {
 		HashMap<K, Vector<Edge<K>>> graph;
 		bool _directed;
 		Array<Edge<K>> _path;
+		unsigned int (*pHash)(K);
+
+//FUNCTION(s)
+//------------------------------------------------------------------------------
 	public:
-		void AddVertex(K label, T value);
+		//Data Manipulation Function(s)
+		void AddVertex(K label, T value) {
+			data.Add(label, value);
+			if(graph.Find(label) == -1) {
+				Vector<Edge<K>> edges = Vector<Edge<K>>();
+				graph.Add(label, edges);
+			}
+		}
+
 		void AddDirectedEdge(K a, K b, double weight=1);
 		void AddUndirectedEdge(K a, K b, double weight=1);
 		void AddEdge(K a, K b, double weight, bool directed=false);
 		void AddEdge(K a, K b, bool directed=false);
-		void RemoveVertex(K label);
-		void RemoveEdge(K a, K b, bool directed=false);
+
+		void RemoveVertex(K label) {
+			data.Remove(label);
+			graph.Remove(label);
+		}
+
+		void RemoveEdge(K a, K b, bool directed = false);
 		void Clear();
+
+
+//CONSTRUCTOR(s)/DESTRUCTOR(s)
+//------------------------------------------------------------------------------
+
+//FUNCTION(s)
+//------------------------------------------------------------------------------
+		//Data Retrieval Function(s)
 		Array<Array<double>> GetAdjacencyMatrix();
 		Array<Edge<K>> GetEdges(K v);
 		Array<Pair<K, T>> GetNeighbors(K v);
-		bool BFS(K start, K target);
-		bool DFS(K start, K target);
 		int GetDegree();
 		int GetIndegree();
 		int GetOutdegree();
@@ -54,6 +79,10 @@ class Graph {
 		Array<K> GetLabels();
 		Array<T> GetData();
 		Array<Edge<K>> GetEdges();
+
+		//Search Function(s)
+		bool BFS(K start, K target);
+		bool DFS(K start, K target);
 };
 
 } //END namespace ds
