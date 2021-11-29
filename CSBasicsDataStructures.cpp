@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include "DataStructures.h"
 #include "HashFunctions.h"
 
@@ -38,8 +39,14 @@ int main() {
 		std::cout << c.GetValue(i);
 	}
 
-	int lol = hash::SHA_256("hello world");
-	std::cout << std::endl << lol;
+	std::cout << std::endl;
+	uint8_t * lol = hash::SHA_256("hello world");
+	for (int i = 0; i < 32; i++) {
+		std::cout << std::hex << std::setfill('0') << std::setw(2) << static_cast<int>(lol[i]);
+	}
+
+	unsigned hashtag = hash::SHA_256_UInt("hello world");
+	std::cout << std::endl << std::hex << hashtag%32;
 
 	return 0;
 }

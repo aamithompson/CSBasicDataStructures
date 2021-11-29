@@ -2,7 +2,7 @@
 // Filename: HashFunctions.h
 // Author: Aaron Thompson
 // Date Created: 11/16/2021
-// Date Last Modified: 11/16/2021
+// Date Last Modified: 11/17/2021
 // Description: Implementations of various hash functions, i.e. for some object
 // x, the hash function h(x) = i where i is an integer. i is meant to be an
 // index value for an array;
@@ -19,6 +19,12 @@
 #include <iostream>
 //------------------------------------------------------------------------------
 namespace hash {
+//Bit Functions
+	constexpr int INT32_BITS = 32;
+
+	uint32_t LeftRotate(uint32_t value, int n);
+	uint32_t RightRotate(uint32_t value, int n);
+
 //SHA-256
 	constexpr int KEY256_SIZE = 32;
 	constexpr int BLOCK256_SIZE = 64;
@@ -51,8 +57,10 @@ namespace hash {
 								0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2 
 							};
 
-	unsigned int SHA_256(const uint8_t key[], int n);
-	unsigned int SHA_256(const std::string &key);
+	uint8_t * SHA_256(const uint8_t key[], int n);
+	uint8_t * SHA_256(const std::string &key);
+	unsigned int SHA_256_UInt(const uint8_t key[], int n);
+	unsigned int SHA_256_UInt(const std::string& key);
 } //END namespace hash
 //------------------------------------------------------------------------------
 #endif //HASH_FUNCTIONS_H
